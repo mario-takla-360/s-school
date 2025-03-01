@@ -8,14 +8,17 @@ const path = require('path');
 const connectDB = require('./db/connect');
 
 //Routers
+const pupilRouter = require('./routes/pupilRoute');
 
 //Middleware
 app.use(express.json());
 app.use(express.static('./public')); //Serve static files from the "public" folder
 
 //Routes
+app.use('/api/v1/pupilInfo', pupilRouter);
 
 //Error Handler
+const errorHandlerMiddleware = require('./middleware/error-handler');
 
 const port = process.env.PORT || 3000;
 

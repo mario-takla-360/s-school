@@ -12,7 +12,7 @@ const storeData = async (req, res) => {
             });
         }
 
-        const newDocument = new pupilInfo({ data: receivedData });
+        const newDocument = new pupilInfo(receivedData);
         await newDocument.save();
 
         return res.status(StatusCodes.CREATED).json({

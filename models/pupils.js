@@ -1,8 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const genericPupilSchema = new mongoose.Schema({
-    data: Schema.Types.Mixed,
-});
-
+const genericPupilSchema = new mongoose.Schema({},
+    { strict: false });
 
 module.exports = mongoose.model('GenericPupilModel', genericPupilSchema);
