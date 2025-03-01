@@ -3,9 +3,12 @@ const { StatusCodes } = require('http-status-codes');
 
 const storeData = async (req, res) => {
     try {
+        console.log('Received request:', req.method, req.url); // Log the request method and URL
         const receivedData = req.body;
+        console.log('Received data:', receivedData); // Log the received data
 
         if (!receivedData || Object.keys(receivedData).length === 0) {
+            console.log('No data provided.'); // Log that no data was provided
             return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
                 message: 'No data provided.',
@@ -14,6 +17,7 @@ const storeData = async (req, res) => {
 
         const newDocument = new pupilInfo(receivedData);
         await newDocument.save();
+        console.log('Data stored successfully:', newDocument); // Log the stored data
 
         return res.status(StatusCodes.CREATED).json({
             success: true,
