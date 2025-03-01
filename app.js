@@ -3,6 +3,8 @@ require('express-async-errors');
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 //Connect to MongoDB
 const connectDB = require('./db/connect');
@@ -11,6 +13,8 @@ const connectDB = require('./db/connect');
 const pupilRouter = require('./routes/pupilRoute');
 
 //Middleware
+app.use(cors()); // Enable CORS
+app.use(bodyParser.json()); // Parse incoming request bodies
 app.use(express.json());
 app.use(express.static('./public')); //Serve static files from the "public" folder
 
