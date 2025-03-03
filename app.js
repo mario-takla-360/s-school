@@ -11,6 +11,8 @@ const connectDB = require('./db/connect');
 
 //Routers
 const pupilRouter = require('./routes/pupilRoute');
+const pupilListRouter = require('./routes/pupilListRoute');
+const fetchRoutes = require('./routes/fetchRoute');
 
 //Middleware
 app.use(cors()); // Enable CORS
@@ -20,6 +22,8 @@ app.use(express.static('./public')); //Serve static files from the "public" fold
 
 //Routes
 app.use('/api/v1/pupilInfo', pupilRouter);
+app.use('/api/v2/pupilListInfo', pupilListRouter);
+app.use('/api/v1/fetch', fetchRoutes);
 
 //Error Handler
 const errorHandlerMiddleware = require('./middleware/error-handler');
