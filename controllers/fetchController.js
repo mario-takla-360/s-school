@@ -1,47 +1,31 @@
 const pupilInfo = require('../models/pupils.js');
 const { StatusCodes } = require('http-status-codes');
 
-// Existing storeData function remains unchanged
-const storeData = async (req, res) => {
+const fetchByProperties = async (req, res) => {
     try {
-        const receivedData = req.body;
+        const { student_id, grade, language } = req.body;
 
-        if (!receivedData || Object.keys(receivedData).length === 0) {
+        console.log('Received query parameters:', { student_id, grade, language }); // Log the received query parameters
+
+        // Validate the required query parameters
+        if (!student_id || !grade || !language) {
+            console.log('Missing required query parameters.'); // Log missing parameters
             return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
-                message: 'No data provided.',
+                message: 'Missing required query parameters: student_id, grade, and language are required.',
             });
         }
 
-        const newDocument = new pupilInfo(receivedData);
-        await newDocument.save();
-
-        return res.status(StatusCodes.CREATED).json({
-            success: true,
-            message: 'Data stored successfully.',
-        });
-    } catch (error) {
-        console.error('Error storing data:', error);
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            success: false,
-            message: 'Error storing data. Please try again later.',
-        });
-    }
-};
-
-// New fetchData function
-const fetchData = async (req, res) => {
-    try {
-        const query = req.body;
-
-        if (!query || Object.keys(query).length === 0) {
-            return res.status(StatusCodes.BAD_REQUEST).json({
-                success: false,
-                message: 'No query provided.',
-            });
-        }
+        // Build the query object
+        const query = {
+            student_id: student_id,
+            grade: grade,
+            language: language
+        };
 
         const matchingDatasets = await pupilInfo.find(query);
+
+        console.log('Matching datasets found:', matchingDatasets); // Log the matching datasets
 
         return res.status(StatusCodes.OK).json({
             success: true,
@@ -56,4 +40,4 @@ const fetchData = async (req, res) => {
     }
 };
 
-module.exports = { storeData, fetchData };
+module.exports = { fetchByProperties };

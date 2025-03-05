@@ -2,7 +2,7 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 const app = express();
-const path = require('path');
+//const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -11,6 +11,9 @@ const connectDB = require('./db/connect');
 
 //Routers
 const pupilRouter = require('./routes/pupilRoute');
+const pupilListRouter = require('./routes/pupilListRoute');
+const fetchRouter = require('./routes/fetchRoute');
+const pOverwriteRouter = require('./routes/pOverwriteRoute');
 
 //Middleware
 app.use(cors()); // Enable CORS
@@ -20,9 +23,12 @@ app.use(express.static('./public')); //Serve static files from the "public" fold
 
 //Routes
 app.use('/api/v1/pupilInfo', pupilRouter);
+app.use('/api/v2/pupilListInfo', pupilListRouter);
+app.use('/api/v1/fetch', fetchRouter);
+app.use('/api/v3/pupilListInfo', pOverwriteRouter);
 
 //Error Handler
-const errorHandlerMiddleware = require('./middleware/error-handler');
+//const errorHandlerMiddleware = require('./middleware/error-handler');
 
 const port = process.env.PORT || 3000;
 
